@@ -1,0 +1,54 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:fitsSystemWindows="true"
+    tools:context="com.lucasbais.paymentdemo.ui.input.PaymentInputActivity">
+
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:contentDescription="@string/logo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_mercado_pago_logo" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/amountTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:background="@android:color/transparent"
+            android:text="@string/amount_title"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@color/textColorSecondary" />
+
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/currencyInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:gravity="center"
+            android:textSize="28sp"
+            android:background="@android:color/transparent"
+            android:hint="@string/amount_hint"
+            android:textColorHint="@color/textColorHighLight"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@color/textColorSecondary"
+            android:inputType="numberSigned" />
+
+    </LinearLayout>
+
+</ScrollView>

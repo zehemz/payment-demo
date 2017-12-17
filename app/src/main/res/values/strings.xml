@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Payment Demo</string>
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="amount_title">Ingrese monto a pagar</string>
+    <string name="amount_hint">$0</string>
+    <string name="loremIpsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget purus eu felis fringilla tempus quis vel tortor. Donec volutpat, nulla ac consequat porttitor, diam erat pharetra felis, ac hendrerit metus dui nec turpis. Integer vestibulum ex non turpis elementum, gravida accumsan magna gravida</string>
+    <string name="payment_message">¿Cómo querés pagar?</string>
+    <string name="logo">Logo</string>
+</resources>
