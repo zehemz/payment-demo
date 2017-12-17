@@ -15,10 +15,10 @@
         android:orientation="vertical">
 
         <ImageView
-            android:contentDescription="@string/logo"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
+            android:contentDescription="@string/logo"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_mercado_pago_logo" />
 
@@ -26,28 +26,28 @@
             android:id="@+id/amountTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:gravity="center"
-            android:textSize="20sp"
             android:background="@android:color/transparent"
-            android:text="@string/amount_title"
             android:fontFamily="sans-serif-black"
-            android:textColor="@color/textColorSecondary" />
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@string/amount_title"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="20sp" />
 
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/currencyInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:gravity="center"
-            android:textSize="28sp"
             android:background="@android:color/transparent"
-            android:hint="@string/amount_hint"
-            android:textColorHint="@color/textColorHighLight"
             android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:hint="@string/amount_hint"
+            android:inputType="numberSigned"
+            android:padding="16dp"
             android:textColor="@color/textColorSecondary"
-            android:inputType="numberSigned" />
+            android:textColorHint="@color/textColorHighLight"
+            android:textSize="28sp" />
 
     </LinearLayout>
 

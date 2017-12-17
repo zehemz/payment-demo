@@ -4,91 +4,87 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import com.lucasbais.paymentdemo.PaymentService
 import com.lucasbais.paymentdemo.datasource.database.AppDatabase
-import com.lucasbais.paymentdemo.datasource.database.entity.BankEntity
+import com.lucasbais.paymentdemo.datasource.database.entity.InstallmentEntity
+import com.lucasbais.paymentdemo.datasource.database.entity.IssuerEntity
+import com.lucasbais.paymentdemo.datasource.database.entity.PayerCostEntity
 import com.lucasbais.paymentdemo.datasource.database.entity.PaymentMethodEntity
-import com.lucasbais.paymentdemo.datasource.network.PaymentClient
-import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.Executor
+import com.lucasbais.paymentdemo.internal.interactors.*
 import javax.inject.Inject
-import javax.inject.Named
 
 
 class PaymentDataService @Inject internal constructor(private val database: AppDatabase,
-                                                      private val paymentClient: PaymentClient,
-                                                      @Named("netExecutor") private val netExecutor: Executor,
-                                                      @Named("diskExecutor") private val diskExecutor: Executor) : PaymentService {
-
+                                                      private val paymentOptionsUseCase: PaymentOptionsUseCase,
+                                                      private val issuerUseCase: IssuerUseCase,
+                                                      private val installmentUseCase: InstallmentUseCase) : PaymentService {
 
     private val creditCardPaymentMethodObservable: MediatorLiveData<List<PaymentMethodEntity>> = MediatorLiveData()
-    private var bankObservable: MediatorLiveData<List<BankEntity>>? = null
-    private var disposable: CompositeDisposable = CompositeDisposable()
+    private val payerCostsObserver: MediatorLiveData<List<PayerCostEntity>> = MediatorLiveData()
+    private var issuerObservable: MediatorLiveData<List<IssuerEntity>> = MediatorLiveData()
 
     init {
-        creditCardPaymentMethodObservable.addSource(database.paymentMethod().getCreditCardPaymentMethods()) { values ->
+        creditCardPaymentMethodObservable.addSource(database.paymentMethod()
+                .getCreditCardPaymentMethods()) { values ->
             values?.let {
                 creditCardPaymentMethodObservable.postValue(values)
             }
         }
     }
 
-    override fun getIssuers(paymentId:String): LiveData<List<BankEntity>> {
-        updateBanksFor(paymentId)
-        if(bankObservable == null){
-            bankObservable = MediatorLiveData()
-            bankObservable?.addSource(database.banks().getBanks(paymentId)){
-                    values -> values?.let {
-                    bankObservable?.postValue(values)
-                }
-            }
-        }
-
-        return bankObservable!!
-    }
-
     override fun getCreditCardPaymentOptions(): LiveData<List<PaymentMethodEntity>> {
-        updatePaymentOptions()
+        retrieveAndStorePaymentMethods()
         return creditCardPaymentMethodObservable
     }
 
-    private fun updatePaymentOptions() {
-        val netPaymentMethodObserver: Observable<List<PaymentMethodEntity>> = paymentClient.getPaymentMethods()
-                .subscribeOn(Schedulers.from(netExecutor))
-                .observeOn(Schedulers.from(diskExecutor))
-
-        disposable.dispose()
-        disposable = CompositeDisposable()
-        disposable.add(netPaymentMethodObserver.subscribeWith(object : DisposableObserver<List<PaymentMethodEntity>>() {
-
-            override fun onNext(values: List<PaymentMethodEntity>) {
-                database.runInTransaction({
-                    database.paymentMethod().insert(values)
-                })
+    override fun getIssuers(paymentId: String): LiveData<List<IssuerEntity>> {
+        issuerObservable = MediatorLiveData()
+        issuerObservable.value = null
+        issuerObservable.addSource(database.issuers().getBanks(paymentId)) { values ->
+            values?.let {
+                issuerObservable.postValue(values)
             }
-
-            override fun onComplete() {}
-            override fun onError(e: Throwable) {}
-        }))
+        }
+        retrieveIssuerAndStore(paymentId)
+        return issuerObservable
     }
 
-    private fun updateBanksFor(paymentId: String){
-        val netBankObserver: Observable<List<BankEntity>> = paymentClient.getIssuers(paymentId)
-                .subscribeOn(Schedulers.from(netExecutor))
-                .observeOn(Schedulers.from(diskExecutor))
+    override fun getInstallment(paymentMethodId: String, issuerId: String, amount: Double): LiveData<List<PayerCostEntity>> {
+        payerCostsObserver.value = null // Clear old values
+        retrieveInstallment(paymentMethodId, issuerId, amount)
+        return payerCostsObserver
+    }
 
-        disposable.dispose()
-        disposable = CompositeDisposable()
-        disposable.add(netBankObserver.subscribeWith(object : DisposableObserver<List<BankEntity>>(){
-            override fun onComplete() {}
-            override fun onError(e: Throwable) {}
-            override fun onNext(values: List<BankEntity>) {
+    private fun retrieveAndStorePaymentMethods() {
+        paymentOptionsUseCase.execute(object : DefaultDisposableObserver<List<PaymentMethodEntity>>() {
+            override fun onNext(t: List<PaymentMethodEntity>) {
                 database.runInTransaction({
-                    values.map { value-> value.paymentId = paymentId }
-                    database.banks().insert(values)
+                    database.paymentMethod().insert(t)
                 })
             }
-        }))
+        }, ParamsEmpty())
+    }
+
+    private fun retrieveInstallment(paymentMethodId: String, issuerId: String, amount: Double) {
+        installmentUseCase.execute(object : DefaultDisposableObserver<InstallmentEntity>() {
+            override fun onNext(t: InstallmentEntity) {
+                payerCostsObserver.value = t.payerCosts
+            }
+        }, InstallmentUseCase.Params.create(paymentMethodId, issuerId, amount))
+    }
+
+    private fun retrieveIssuerAndStore(paymentId: String) {
+        issuerUseCase.execute(object : DefaultDisposableObserver<List<IssuerEntity>>() {
+            override fun onNext(t: List<IssuerEntity>) {
+                database.runInTransaction({
+                    t.map { value -> value.paymentId = paymentId }
+                    database.issuers().insert(t)
+                })
+            }
+        }, IssuerUseCase.Params.create(paymentId))
+    }
+
+    override fun dispose() {
+        installmentUseCase.dispose()
+        paymentOptionsUseCase.dispose()
+        issuerUseCase.dispose()
     }
 }

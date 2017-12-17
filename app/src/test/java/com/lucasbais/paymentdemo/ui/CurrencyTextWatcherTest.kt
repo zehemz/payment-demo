@@ -10,12 +10,12 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CurrencyTextWatcherTest {
     @Mock
-    lateinit var mockEditText:EditText
+    lateinit var mockEditText: EditText
 
     lateinit var currencyTextWatcher: CurrencyTextWatcher
 
     @Before
-    fun setUp(){
+    fun setUp() {
         currencyTextWatcher = CurrencyTextWatcher(mockEditText)
     }
 

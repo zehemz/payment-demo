@@ -77,8 +77,8 @@ class ApplicationModule(private val context: Context) {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         okHttpClient
-                .addInterceptor(httpLoggingInterceptor)
                 .addInterceptor(PublicKeyInterceptor("444a9ef5-8a6b-429f-abdf-587639155d88"))
+                .addInterceptor(httpLoggingInterceptor)
                 .cache(Cache(File(context.cacheDir, "responses"), 10 * 1024 * 1024))
         return okHttpClient.build()
     }

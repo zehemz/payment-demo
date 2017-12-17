@@ -1,4 +1,4 @@
-package com.lucasbais.paymentdemo.ui.bank
+package com.lucasbais.paymentdemo.ui.installment
 
 import android.databinding.DataBindingUtil
 import android.support.v7.util.DiffUtil
@@ -6,16 +6,16 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.lucasbais.paymentdemo.R
-import com.lucasbais.paymentdemo.databinding.HolderBankBinding
-import com.lucasbais.paymentdemo.datasource.database.entity.BankEntity
+import com.lucasbais.paymentdemo.databinding.HolderInstallmentBinding
+import com.lucasbais.paymentdemo.datasource.database.entity.PayerCostEntity
 
 //TODO :: refactor make generic adapter with callback BaseAdapter<T, V>
-class BankAdapter(private val bankCallback: BankCallback) : RecyclerView.Adapter<BankHolder>() {
+class PayerCostAdapter(private val callback: PayerCostCallback) : RecyclerView.Adapter<PayerCostHolder>() {
 
-    private var adapterValues: List<BankEntity>? = null
+    private var adapterValues: List<PayerCostEntity>? = null
 
-    override fun onBindViewHolder(holder: BankHolder, position: Int) {
-        holder.binding.bank = adapterValues?.get(position)
+    override fun onBindViewHolder(holder: PayerCostHolder, position: Int) {
+        holder.binding.payerCost = adapterValues?.get(position)
         holder.binding.executePendingBindings()
     }
 
@@ -23,15 +23,15 @@ class BankAdapter(private val bankCallback: BankCallback) : RecyclerView.Adapter
         return if (adapterValues == null) 0 else adapterValues!!.size
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BankHolder {
-        val binding: HolderBankBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
-                R.layout.holder_bank,
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PayerCostHolder {
+        val binding: HolderInstallmentBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
+                R.layout.holder_installment,
                 parent, false)
-        binding.callback = bankCallback
-        return BankHolder(binding)
+        binding.callback = callback
+        return PayerCostHolder(binding)
     }
 
-    fun setValues(values: List<BankEntity>) {
+    fun setValues(values: List<PayerCostEntity>) {
         if (this.adapterValues == null) {
             this.adapterValues = values
             notifyDataSetChanged()
@@ -48,13 +48,13 @@ class BankAdapter(private val bankCallback: BankCallback) : RecyclerView.Adapter
                 override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
                     val old = adapterValues?.get(oldItemPosition)
                     val newElement = values[newItemPosition]
-                    return old?.id.equals(newElement.id)
+                    return old?.recommendedMessage.equals(newElement.recommendedMessage)
                 }
 
                 override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
                     val old = adapterValues?.get(oldItemPosition)
                     val newElement = values[newItemPosition]
-                    return (old?.id.equals(newElement.id))
+                    return (old?.recommendedMessage.equals(newElement.recommendedMessage))
                 }
             })
             adapterValues = values

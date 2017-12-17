@@ -7,7 +7,8 @@ import com.lucasbais.paymentdemo.R
 class ImageBindingAdapter {
 
     companion object {
-        @JvmStatic @BindingAdapter(value = ["thumbnail"])
+        @JvmStatic
+        @BindingAdapter(value = ["thumbnail"])
         fun loadImageUrl(view: ImageView, url: String) {
             GlideApp.with(view.context)
                     .load(url)

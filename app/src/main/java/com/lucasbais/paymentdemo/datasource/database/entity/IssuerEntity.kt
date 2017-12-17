@@ -11,12 +11,12 @@ import io.reactivex.annotations.NonNull
                 onDelete = ForeignKey.CASCADE))],
         indices = [(Index(value = ["paymentId"]))])
 
-class BankEntity {
+class IssuerEntity {
 
     @PrimaryKey
     @NonNull
     lateinit var id: String
-    lateinit var paymentId:String
+    lateinit var paymentId: String
     lateinit var name: String
     lateinit var thumbnail: String
 
@@ -24,7 +24,7 @@ class BankEntity {
     constructor()
 
     @Ignore
-    constructor(id: String, name: String, paymentId:String, thumbnail: String) {
+    constructor(id: String, name: String, paymentId: String, thumbnail: String) {
         this.id = id
         this.name = name
         this.paymentId = paymentId

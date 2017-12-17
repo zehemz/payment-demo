@@ -5,17 +5,17 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import android.support.annotation.VisibleForTesting
-import com.lucasbais.paymentdemo.datasource.database.dao.BankDao
+import com.lucasbais.paymentdemo.datasource.database.dao.IssuerDao
 import com.lucasbais.paymentdemo.datasource.database.dao.PaymentMethodDao
-import com.lucasbais.paymentdemo.datasource.database.entity.BankEntity
+import com.lucasbais.paymentdemo.datasource.database.entity.IssuerEntity
 import com.lucasbais.paymentdemo.datasource.database.entity.PaymentMethodEntity
 
 
-@Database(entities = [PaymentMethodEntity::class, BankEntity::class], version = 1, exportSchema = false)
+@Database(entities = [PaymentMethodEntity::class, IssuerEntity::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun paymentMethod(): PaymentMethodDao
-    abstract fun banks(): BankDao
+    abstract fun issuers(): IssuerDao
 
     companion object {
 

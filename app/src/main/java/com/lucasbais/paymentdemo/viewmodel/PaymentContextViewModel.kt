@@ -1,54 +1,63 @@
 package com.lucasbais.paymentdemo.viewmodel
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.*
 import com.lucasbais.paymentdemo.PaymentService
-import com.lucasbais.paymentdemo.datasource.database.entity.BankEntity
+import com.lucasbais.paymentdemo.datasource.database.entity.IssuerEntity
+import com.lucasbais.paymentdemo.datasource.database.entity.PayerCostEntity
 import com.lucasbais.paymentdemo.datasource.database.entity.PaymentMethodEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
-// TODO no se esta haciendo uso de la magia de Viewmodel, porque constructores custom
-// TODO es necesario algo como esto, pero de momento con el contexto a nivel singleton cumple la misma funcion y tecnicamente hablando es mas performante
-// https://github.com/googlesamples/android-architecture-components/blob/master/GithubBrowserSample/app/src/main/java/com/android/example/github/viewmodel/GithubViewModelFactory.java
-// TODO algo a chequear es ver que pasa con el lifecycle, cuando te salis del ejemplo de android se pudre todo.
 @Singleton
-class PaymentContextViewModel @Inject internal constructor(private val paymentService: PaymentService) : ViewModel() {
+class PaymentContextViewModel @Inject internal constructor(private val paymentService: PaymentService) : LifecycleObserver {
 
-    private val priceToPay: MutableLiveData<String> = MutableLiveData()
-    private val creditCardId: MutableLiveData<String> = MutableLiveData()
-    private val bankId: MutableLiveData<String> = MutableLiveData()
+    private val amount: MutableLiveData<String> = MutableLiveData()
+    private val payingMethod: MutableLiveData<String> = MutableLiveData()
+    private val issuer: MutableLiveData<String> = MutableLiveData()
 
     fun getPriceToPay(): LiveData<String> {
-        return priceToPay
+        return amount
     }
 
     fun getCreditCardSelected(): LiveData<String> {
-        return creditCardId
+        return payingMethod
     }
 
     fun getBankId(): LiveData<String> {
-        return bankId
+        return issuer
     }
 
     fun getCreditCardPaymentMethods(): LiveData<List<PaymentMethodEntity>> {
         return paymentService.getCreditCardPaymentOptions()
     }
 
-    fun getBanks(): LiveData<List<BankEntity>> {
-        return paymentService.getIssuers(creditCardId.value!!)
+    fun getIssuers(): LiveData<List<IssuerEntity>> {
+        return paymentService.getIssuers(payingMethod.value!!)
+    }
+
+    fun getPayerCosts(): LiveData<List<PayerCostEntity>> {
+        val toPay: Double = amount.value!!.replace(Regex("[^\\d.]"), "").toDouble()
+        return paymentService.getInstallment(payingMethod.value!!, issuer.value!!, toPay)
     }
 
     fun setPaymentMethodSelected(paymentMethodEntity: PaymentMethodEntity) {
-        creditCardId.value = paymentMethodEntity.id
+        payingMethod.value = paymentMethodEntity.id
     }
 
-    fun setBankSelected(bank: BankEntity) {
-        bankId.value = bank.id
+    fun setBankSelected(issuer: IssuerEntity) {
+        this.issuer.value = issuer.id
     }
 
     fun setPriceToPay(price: String) {
-        priceToPay.value = price
+        amount.value = price
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    fun disposeUseCases() {
+        paymentService.dispose()
+    }
+
+    fun setPayerCost(payerCost: PayerCostEntity) {
+
     }
 }

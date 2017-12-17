@@ -5,8 +5,9 @@ import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.lucasbais.paymentdemo.R
 import com.lucasbais.paymentdemo.datasource.database.entity.PaymentMethodEntity
-import com.lucasbais.paymentdemo.ui.bank.BankSelectionActivity
+import com.lucasbais.paymentdemo.ui.issuer.IssuerSelectionActivity
 import com.lucasbais.paymentdemo.ui.BasePaymentActivity
 import kotlinx.android.synthetic.main.activity_payment_method.*
 
@@ -32,6 +33,10 @@ class PaymentMethodActivity : BasePaymentActivity(), PaymentCallback {
 
     override fun onClick(paymentMethodEntity: PaymentMethodEntity) {
         paymentContext.setPaymentMethodSelected(paymentMethodEntity)
-        BankSelectionActivity.start(this)
+        IssuerSelectionActivity.start(this)
+    }
+
+    override fun getMessage(): Int {
+        return R.string.payment_message
     }
 }

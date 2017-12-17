@@ -9,5 +9,7 @@
     <string name="amount_hint">$0</string>
     <string name="loremIpsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget purus eu felis fringilla tempus quis vel tortor. Donec volutpat, nulla ac consequat porttitor, diam erat pharetra felis, ac hendrerit metus dui nec turpis. Integer vestibulum ex non turpis elementum, gravida accumsan magna gravida</string>
     <string name="payment_message">¿Cómo querés pagar?</string>
+    <string name="issuer_message">¿Cuál es el banco de tu tarjeta?</string>
+    <string name="installment_message">¿Cuantas cuotas?</string>
     <string name="logo">Logo</string>
 </resources>
