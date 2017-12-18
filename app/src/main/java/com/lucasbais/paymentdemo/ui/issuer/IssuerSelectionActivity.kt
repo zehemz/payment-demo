@@ -5,7 +5,6 @@ import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import com.lucasbais.paymentdemo.R
 import com.lucasbais.paymentdemo.datasource.database.entity.IssuerEntity
 import com.lucasbais.paymentdemo.ui.BasePaymentActivity
@@ -33,7 +32,7 @@ class IssuerSelectionActivity : BasePaymentActivity(), IssuerCallback {
     }
 
     override fun onClick(issuer: IssuerEntity) {
-        paymentContext.setBankSelected(issuer)
+        paymentContext.issuerSelected(issuer)
         InstallmentActivity.start(this)
     }
 

@@ -3,5 +3,8 @@
     <dimen name="small">8dp</dimen>
     <dimen name="mid">16dp</dimen>
     <dimen name="big">24dp</dimen>
-    <dimen name="textSizeBig">24sp</dimen>
+    <dimen name="textSizeBig">20sp</dimen>
+    <dimen name="textSizeMid">16sp</dimen>
+    <dimen name="textSizeXBig">30sp</dimen>
+    <dimen name="logoSize">180dp</dimen>
 </resources>

@@ -32,7 +32,7 @@ class PaymentMethodActivity : BasePaymentActivity(), PaymentCallback {
     }
 
     override fun onClick(paymentMethodEntity: PaymentMethodEntity) {
-        paymentContext.setPaymentMethodSelected(paymentMethodEntity)
+        paymentContext.paymentMethodSelected(paymentMethodEntity)
         IssuerSelectionActivity.start(this)
     }
 

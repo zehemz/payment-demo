@@ -1,6 +1,9 @@
 package com.lucasbais.paymentdemo.viewmodel
 
-import android.arch.lifecycle.*
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.LifecycleObserver
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.OnLifecycleEvent
 import com.lucasbais.paymentdemo.PaymentService
 import com.lucasbais.paymentdemo.datasource.database.entity.IssuerEntity
 import com.lucasbais.paymentdemo.datasource.database.entity.PayerCostEntity
@@ -11,45 +14,34 @@ import javax.inject.Singleton
 @Singleton
 class PaymentContextViewModel @Inject internal constructor(private val paymentService: PaymentService) : LifecycleObserver {
 
-    private val amount: MutableLiveData<String> = MutableLiveData()
-    private val payingMethod: MutableLiveData<String> = MutableLiveData()
-    private val issuer: MutableLiveData<String> = MutableLiveData()
-
-    fun getPriceToPay(): LiveData<String> {
-        return amount
-    }
-
-    fun getCreditCardSelected(): LiveData<String> {
-        return payingMethod
-    }
-
-    fun getBankId(): LiveData<String> {
-        return issuer
-    }
+    private lateinit var amount: String
+    private lateinit var issuer: IssuerEntity
+    private lateinit var payerCost: PayerCostEntity
+    private lateinit var payingMethod: PaymentMethodEntity
 
     fun getCreditCardPaymentMethods(): LiveData<List<PaymentMethodEntity>> {
         return paymentService.getCreditCardPaymentOptions()
     }
 
     fun getIssuers(): LiveData<List<IssuerEntity>> {
-        return paymentService.getIssuers(payingMethod.value!!)
+        return paymentService.getIssuers(payingMethod.id)
     }
 
     fun getPayerCosts(): LiveData<List<PayerCostEntity>> {
-        val toPay: Double = amount.value!!.replace(Regex("[^\\d.]"), "").toDouble()
-        return paymentService.getInstallment(payingMethod.value!!, issuer.value!!, toPay)
+        val toPay: Double = amount.replace(Regex("[^\\d.]"), "").toDouble()
+        return paymentService.getInstallment(payingMethod.id, issuer.id, toPay)
     }
 
-    fun setPaymentMethodSelected(paymentMethodEntity: PaymentMethodEntity) {
-        payingMethod.value = paymentMethodEntity.id
+    fun paymentMethodSelected(paymentMethodEntity: PaymentMethodEntity) {
+        payingMethod = paymentMethodEntity
     }
 
-    fun setBankSelected(issuer: IssuerEntity) {
-        this.issuer.value = issuer.id
+    fun issuerSelected(issuer: IssuerEntity) {
+        this.issuer = issuer
     }
 
     fun setPriceToPay(price: String) {
-        amount.value = price
+        amount = price
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
@@ -57,7 +49,13 @@ class PaymentContextViewModel @Inject internal constructor(private val paymentSe
         paymentService.dispose()
     }
 
-    fun setPayerCost(payerCost: PayerCostEntity) {
+    fun payerCostSelected(payerCost: PayerCostEntity) {
+        this.payerCost = payerCost
+    }
 
+    fun getCompleteUserInput(): String {
+        return String.format("Amount: %s\nIssuer: %s\nPayer cost: %s", amount,
+                issuer.name,
+                payerCost.recommendedMessage)
     }
 }

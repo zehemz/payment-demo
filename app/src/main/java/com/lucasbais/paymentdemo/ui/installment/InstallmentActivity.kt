@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager
 import com.lucasbais.paymentdemo.R
 import com.lucasbais.paymentdemo.datasource.database.entity.PayerCostEntity
 import com.lucasbais.paymentdemo.ui.BasePaymentActivity
+import com.lucasbais.paymentdemo.ui.input.PaymentInputActivity
 import kotlinx.android.synthetic.main.activity_payment_method.*
 
 class InstallmentActivity : BasePaymentActivity(), PayerCostCallback {
@@ -37,6 +38,7 @@ class InstallmentActivity : BasePaymentActivity(), PayerCostCallback {
     }
 
     override fun onClick(payerCost: PayerCostEntity) {
-        paymentContext.setPayerCost(payerCost)
+        paymentContext.payerCostSelected(payerCost)
+        PaymentInputActivity.startShowingUserValues(this)
     }
 }

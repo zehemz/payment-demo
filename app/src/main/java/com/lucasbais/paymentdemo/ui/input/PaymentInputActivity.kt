@@ -1,7 +1,10 @@
 package com.lucasbais.paymentdemo.ui.input
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.view.View
 import com.lucasbais.paymentdemo.R
@@ -23,6 +26,14 @@ class PaymentInputActivity : BaseActivity() {
 
         private const val NON_IMMERSIVE_ANIMATION_DELAY = 500L
 
+        private const val EXTRA_SHOW_USER_RESULT = "EXTRA_SHOW_USER_RESULT"
+
+        fun startShowingUserValues(activity: AppCompatActivity){
+            val intent = Intent(activity, PaymentInputActivity::class.java)
+            intent.putExtra(EXTRA_SHOW_USER_RESULT, true)
+            intent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            activity.startActivity(intent)
+        }
     }
 
     private val onEnterListener = object : View.OnKeyListener {
@@ -36,10 +47,6 @@ class PaymentInputActivity : BaseActivity() {
         }
     }
 
-    private var isImmersiveMode: Boolean = true
-
-    private val visibilityHandler = Handler()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getApplicationComponent().inject(this)
@@ -50,11 +57,29 @@ class PaymentInputActivity : BaseActivity() {
         return R.layout.activity_payment_input
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        if(shouldShowDialog(intent)){
+            showResultDialog()
+        }
+    }
+
     private fun initializeView() {
         content.setOnClickListener { toggle() }
         currencyInput.addTextChangedListener(CurrencyTextWatcher(currencyInput))
         currencyInput.setOnKeyListener(onEnterListener)
     }
+
+    private fun showResultDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.user_input_alert_title)
+        builder.setMessage(paymentContext.getCompleteUserInput())
+        builder.show()
+    }
+
+    private fun shouldShowDialog(intent: Intent?) = (intent!= null
+            && intent.extras !=null
+            && intent.extras.containsKey(EXTRA_SHOW_USER_RESULT)
+            && intent.getBooleanExtra(EXTRA_SHOW_USER_RESULT, false))
 
     override fun onResume() {
         forceImmersive()
@@ -99,6 +124,10 @@ class PaymentInputActivity : BaseActivity() {
      * I don't like this way to handle the immersive but is one of android samples,
      * I just wanted to try this feature.
      */
+    private var isImmersiveMode: Boolean = true
+
+    private val visibilityHandler = Handler()
+
     private val nonImmersiveConfigurationRunnable = Runnable {
         content.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or

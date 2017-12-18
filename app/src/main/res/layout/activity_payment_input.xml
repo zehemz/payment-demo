@@ -15,24 +15,33 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="@dimen/logoSize"
+            android:layout_height="@dimen/logoSize"
             android:layout_gravity="center"
             android:contentDescription="@string/logo"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_mercado_pago_logo" />
 
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/amountTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
-            android:padding="16dp"
+            android:text="@string/wellcome"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="@dimen/textSizeMid" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/amountTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
             android:text="@string/amount_title"
             android:textColor="@color/textColorSecondary"
-            android:textSize="20sp" />
+            android:textSize="@dimen/textSizeMid" />
 
 
         <android.support.v7.widget.AppCompatEditText
@@ -40,14 +49,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="sans-serif"
             android:gravity="center"
             android:hint="@string/amount_hint"
             android:inputType="numberSigned"
-            android:padding="16dp"
+            android:padding="@dimen/mid"
             android:textColor="@color/textColorSecondary"
-            android:textColorHint="@color/textColorHighLight"
-            android:textSize="28sp" />
+            android:textColorHint="@color/colorPrimaryDark"
+            android:textSize="@dimen/textSizeXBig" />
 
     </LinearLayout>
 
