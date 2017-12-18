@@ -1,4 +1,4 @@
-package com.lucasbais.paymentdemo.internal.excecution
+package com.lucasbais.paymentdemo.utilities
 
 import android.os.Handler
 import android.os.Looper

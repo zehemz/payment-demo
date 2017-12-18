@@ -1,4 +1,4 @@
-package com.lucasbais.paymentdemo.internal.interactors
+package com.lucasbais.paymentdemo.datasource.interactors
 
 import io.reactivex.observers.DisposableObserver
 

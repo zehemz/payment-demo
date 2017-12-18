@@ -7,8 +7,8 @@ import android.content.Context
 import android.support.annotation.VisibleForTesting
 import com.lucasbais.paymentdemo.datasource.database.dao.IssuerDao
 import com.lucasbais.paymentdemo.datasource.database.dao.PaymentMethodDao
-import com.lucasbais.paymentdemo.datasource.database.entity.IssuerEntity
-import com.lucasbais.paymentdemo.datasource.database.entity.PaymentMethodEntity
+import com.lucasbais.paymentdemo.datasource.entity.IssuerEntity
+import com.lucasbais.paymentdemo.datasource.entity.PaymentMethodEntity
 
 
 @Database(entities = [PaymentMethodEntity::class, IssuerEntity::class], version = 1, exportSchema = false)

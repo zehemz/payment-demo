@@ -1,7 +1,7 @@
-package com.lucasbais.paymentdemo.internal.interactors
+package com.lucasbais.paymentdemo.datasource.interactors
 
 
-import com.lucasbais.paymentdemo.datasource.database.entity.IssuerEntity
+import com.lucasbais.paymentdemo.datasource.entity.IssuerEntity
 import com.lucasbais.paymentdemo.datasource.network.PaymentClient
 import io.reactivex.Observable
 import java.util.concurrent.Executor

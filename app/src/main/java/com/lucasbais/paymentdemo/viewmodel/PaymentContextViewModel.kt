@@ -4,10 +4,10 @@ import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.OnLifecycleEvent
-import com.lucasbais.paymentdemo.PaymentService
-import com.lucasbais.paymentdemo.datasource.database.entity.IssuerEntity
-import com.lucasbais.paymentdemo.datasource.database.entity.PayerCostEntity
-import com.lucasbais.paymentdemo.datasource.database.entity.PaymentMethodEntity
+import com.lucasbais.paymentdemo.datasource.PaymentService
+import com.lucasbais.paymentdemo.datasource.entity.IssuerEntity
+import com.lucasbais.paymentdemo.datasource.entity.PayerCostEntity
+import com.lucasbais.paymentdemo.datasource.entity.PaymentMethodEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 

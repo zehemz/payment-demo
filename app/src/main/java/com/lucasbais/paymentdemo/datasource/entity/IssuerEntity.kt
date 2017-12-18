@@ -1,4 +1,4 @@
-package com.lucasbais.paymentdemo.datasource.database.entity
+package com.lucasbais.paymentdemo.datasource.entity
 
 import android.arch.persistence.room.*
 import io.reactivex.annotations.NonNull

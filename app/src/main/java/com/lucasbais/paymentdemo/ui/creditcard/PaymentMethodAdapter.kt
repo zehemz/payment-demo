@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.lucasbais.paymentdemo.R
 import com.lucasbais.paymentdemo.databinding.HolderPaymentMethodBinding
-import com.lucasbais.paymentdemo.datasource.database.entity.PaymentMethodEntity
+import com.lucasbais.paymentdemo.datasource.entity.PaymentMethodEntity
 
 
 class PaymentMethodAdapter(private val paymentCallback: PaymentCallback) : RecyclerView.Adapter<PaymentMethodHolder>() {

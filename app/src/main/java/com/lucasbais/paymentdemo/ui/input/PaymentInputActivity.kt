@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.view.View
 import com.lucasbais.paymentdemo.R
-import com.lucasbais.paymentdemo.isEnter
+import com.lucasbais.paymentdemo.utilities.isEnter
 import com.lucasbais.paymentdemo.ui.BaseActivity
 import com.lucasbais.paymentdemo.ui.creditcard.PaymentMethodActivity
 import com.lucasbais.paymentdemo.viewmodel.PaymentContextViewModel

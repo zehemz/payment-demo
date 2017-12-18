@@ -22,7 +22,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 
-import com.lucasbais.paymentdemo.datasource.database.entity.PaymentMethodEntity
+import com.lucasbais.paymentdemo.datasource.entity.PaymentMethodEntity
 
 @Dao
 interface PaymentMethodDao {

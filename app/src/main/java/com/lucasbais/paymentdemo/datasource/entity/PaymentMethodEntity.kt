@@ -1,4 +1,4 @@
-package com.lucasbais.paymentdemo.datasource.database.entity
+package com.lucasbais.paymentdemo.datasource.entity
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Ignore

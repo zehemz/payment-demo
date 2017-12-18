@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.lucasbais.paymentdemo.R
 import com.lucasbais.paymentdemo.databinding.HolderIssuerBinding
-import com.lucasbais.paymentdemo.datasource.database.entity.IssuerEntity
+import com.lucasbais.paymentdemo.datasource.entity.IssuerEntity
 
 //TODO :: refactor make generic adapter with callback BaseAdapter<T, V>
 class IssuerAdapter(private val issuerCallback: IssuerCallback) : RecyclerView.Adapter<IssuerHolder>() {

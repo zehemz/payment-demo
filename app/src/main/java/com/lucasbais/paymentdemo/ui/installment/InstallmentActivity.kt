@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.lucasbais.paymentdemo.R
-import com.lucasbais.paymentdemo.datasource.database.entity.PayerCostEntity
+import com.lucasbais.paymentdemo.datasource.entity.PayerCostEntity
 import com.lucasbais.paymentdemo.ui.BasePaymentActivity
 import com.lucasbais.paymentdemo.ui.input.PaymentInputActivity
 import kotlinx.android.synthetic.main.activity_payment_method.*

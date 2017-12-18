@@ -1,4 +1,4 @@
-package com.lucasbais.paymentdemo
+package com.lucasbais.paymentdemo.utilities
 
 import android.view.KeyEvent
 import android.view.View

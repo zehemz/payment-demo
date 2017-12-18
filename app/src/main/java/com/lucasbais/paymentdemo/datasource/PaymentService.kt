@@ -1,9 +1,9 @@
-package com.lucasbais.paymentdemo
+package com.lucasbais.paymentdemo.datasource
 
 import android.arch.lifecycle.LiveData
-import com.lucasbais.paymentdemo.datasource.database.entity.IssuerEntity
-import com.lucasbais.paymentdemo.datasource.database.entity.PayerCostEntity
-import com.lucasbais.paymentdemo.datasource.database.entity.PaymentMethodEntity
+import com.lucasbais.paymentdemo.datasource.entity.IssuerEntity
+import com.lucasbais.paymentdemo.datasource.entity.PayerCostEntity
+import com.lucasbais.paymentdemo.datasource.entity.PaymentMethodEntity
 
 interface PaymentService {
 

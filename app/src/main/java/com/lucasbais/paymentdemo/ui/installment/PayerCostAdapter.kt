@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.lucasbais.paymentdemo.R
 import com.lucasbais.paymentdemo.databinding.HolderInstallmentBinding
-import com.lucasbais.paymentdemo.datasource.database.entity.PayerCostEntity
+import com.lucasbais.paymentdemo.datasource.entity.PayerCostEntity
 
 //TODO :: refactor make generic adapter with callback BaseAdapter<T, V>
 class PayerCostAdapter(private val callback: PayerCostCallback) : RecyclerView.Adapter<PayerCostHolder>() {

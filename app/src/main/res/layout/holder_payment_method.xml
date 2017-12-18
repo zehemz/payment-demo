@@ -7,7 +7,7 @@
 
         <variable
             name="payment"
-            type="com.lucasbais.paymentdemo.datasource.database.entity.PaymentMethodEntity" />
+            type="com.lucasbais.paymentdemo.datasource.entity.PaymentMethodEntity" />
 
         <variable
             name="callback"

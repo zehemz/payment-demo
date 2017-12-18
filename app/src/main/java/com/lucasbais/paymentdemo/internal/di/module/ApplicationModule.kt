@@ -6,13 +6,13 @@ import android.content.SharedPreferences
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.lucasbais.paymentdemo.PaymentService
+import com.lucasbais.paymentdemo.datasource.PaymentService
 import com.lucasbais.paymentdemo.datasource.PaymentDataService
 import com.lucasbais.paymentdemo.datasource.database.AppDatabase
 import com.lucasbais.paymentdemo.datasource.network.CamelCaseNamingPolicy
 import com.lucasbais.paymentdemo.datasource.network.PaymentClient
 import com.lucasbais.paymentdemo.datasource.network.PublicKeyInterceptor
-import com.lucasbais.paymentdemo.internal.excecution.MainThreadExecutor
+import com.lucasbais.paymentdemo.utilities.MainThreadExecutor
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache

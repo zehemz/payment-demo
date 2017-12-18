@@ -7,7 +7,7 @@
 
         <variable
             name="issuer"
-            type="com.lucasbais.paymentdemo.datasource.database.entity.IssuerEntity" />
+            type="com.lucasbais.paymentdemo.datasource.entity.IssuerEntity" />
 
         <variable
             name="callback"

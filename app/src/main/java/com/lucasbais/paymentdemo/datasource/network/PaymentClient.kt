@@ -1,8 +1,8 @@
 package com.lucasbais.paymentdemo.datasource.network
 
-import com.lucasbais.paymentdemo.datasource.database.entity.IssuerEntity
-import com.lucasbais.paymentdemo.datasource.database.entity.InstallmentEntity
-import com.lucasbais.paymentdemo.datasource.database.entity.PaymentMethodEntity
+import com.lucasbais.paymentdemo.datasource.entity.IssuerEntity
+import com.lucasbais.paymentdemo.datasource.entity.InstallmentEntity
+import com.lucasbais.paymentdemo.datasource.entity.PaymentMethodEntity
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query

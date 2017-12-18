@@ -5,7 +5,7 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
-import com.lucasbais.paymentdemo.datasource.database.entity.IssuerEntity
+import com.lucasbais.paymentdemo.datasource.entity.IssuerEntity
 
 @Dao
 interface IssuerDao {
