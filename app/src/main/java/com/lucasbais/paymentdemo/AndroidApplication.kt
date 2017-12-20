@@ -19,7 +19,7 @@ class AndroidApplication : Application() {
 
     private fun initializeApplicationComponent() {
         DaggerApplicationComponent.builder()
-                .applicationModule(ApplicationModule(applicationContext))
+                .applicationModule(ApplicationModule(this))
                 .build()
                 .inject(this)
     }

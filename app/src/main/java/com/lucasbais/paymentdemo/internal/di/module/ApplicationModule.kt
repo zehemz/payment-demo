@@ -1,13 +1,12 @@
 package com.lucasbais.paymentdemo.internal.di.module
 
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.lucasbais.paymentdemo.datasource.PaymentService
-import com.lucasbais.paymentdemo.datasource.PaymentDataService
 import com.lucasbais.paymentdemo.datasource.database.AppDatabase
 import com.lucasbais.paymentdemo.datasource.network.CamelCaseNamingPolicy
 import com.lucasbais.paymentdemo.datasource.network.PaymentClient
@@ -28,8 +27,8 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 
-@Module
-class ApplicationModule(private val context: Context) {
+@Module(includes = [ViewModelModule::class])
+class ApplicationModule(private val context: Application) {
 
     @Provides
     @Singleton
@@ -39,7 +38,13 @@ class ApplicationModule(private val context: Context) {
 
     @Provides
     @Singleton
-    internal fun providesApplicationContext(): Context {
+    internal fun providesApplicationContext(): Application {
+        return context
+    }
+
+    @Provides
+    @Singleton
+    internal fun context(): Context {
         return context
     }
 
@@ -107,11 +112,5 @@ class ApplicationModule(private val context: Context) {
     @Singleton
     internal fun paymentClient(retrofit: Retrofit): PaymentClient {
         return retrofit.create(PaymentClient::class.java)
-    }
-
-    @Provides
-    @Singleton
-    internal fun paymentService(paymentDataService: PaymentDataService): PaymentService {
-        return paymentDataService
     }
 }

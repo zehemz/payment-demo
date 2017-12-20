@@ -1,9 +1,7 @@
 package com.lucasbais.paymentdemo.viewmodel
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.OnLifecycleEvent
+import android.arch.lifecycle.ViewModel
 import com.lucasbais.paymentdemo.datasource.PaymentService
 import com.lucasbais.paymentdemo.datasource.entity.IssuerEntity
 import com.lucasbais.paymentdemo.datasource.entity.PayerCostEntity
@@ -12,7 +10,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PaymentContextViewModel @Inject internal constructor(private val paymentService: PaymentService) : LifecycleObserver {
+class PaymentContextViewModel @Inject internal constructor(private val paymentService: PaymentService)
+    : ViewModel() {
 
     private lateinit var amount: String
     private lateinit var issuer: IssuerEntity
@@ -44,11 +43,6 @@ class PaymentContextViewModel @Inject internal constructor(private val paymentSe
         amount = price
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    fun disposeUseCases() {
-        paymentService.dispose()
-    }
-
     fun payerCostSelected(payerCost: PayerCostEntity) {
         this.payerCost = payerCost
     }
@@ -57,5 +51,9 @@ class PaymentContextViewModel @Inject internal constructor(private val paymentSe
         return String.format("Amount: %s\nIssuer: %s\nPayer cost: %s", amount,
                 issuer.name,
                 payerCost.recommendedMessage)
+    }
+
+    override fun onCleared() {
+        paymentService.dispose()
     }
 }
