@@ -1,5 +1,7 @@
 package com.lucasbais.paymentdemo.ui.input
 
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -17,8 +19,11 @@ import javax.inject.Inject
 
 class PaymentInputActivity : BaseActivity() {
 
+
+    private lateinit var paymentContext: PaymentContextViewModel
+
     @Inject
-    internal lateinit var paymentContext: PaymentContextViewModel
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     companion object {
 
@@ -50,6 +55,9 @@ class PaymentInputActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getApplicationComponent().inject(this)
+        paymentContext = ViewModelProviders.of(this, viewModelFactory)
+                .get(PaymentContextViewModel::class.java)
+
         initializeView()
     }
 
